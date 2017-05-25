@@ -9,12 +9,12 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, string
 
     var apiKey = "Ap9opDJtO8wtNnk1wNFdz2blihxwv8mPZdB5vEJR7epV3tluq67AFF75nFgVGzMH"; 
 
-    string LocationA = "79 Delmar Street San Francisco CA";
-    string LocationB = name;
+    string locationA = "79 Delmar Street San Francisco CA";
+    string locationB = name;
 
     var logic = new BingLocationFunctionLibrary.Logic(apiKey);
 
-    logic.SayHello($"{ LocationA } + { LocationB }"); 
+    logic.GetRoute(locationA, locationB); 
 
 
     return req.CreateResponse(HttpStatusCode.OK, "Hello " + name);
