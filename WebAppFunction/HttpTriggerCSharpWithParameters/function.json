@@ -6,7 +6,7 @@
       "name": "req",
       "type": "httpTrigger",
       "direction": "in",
-      "route": "HttpTriggerCSharp/name/{name}",
+      "route": "HttpTriggerCSharp/locations/{locationA}/{locationB}",
       "methods": [
         "get"
       ]

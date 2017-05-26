@@ -23,12 +23,14 @@ namespace BingLocationFunctionLibrary
             Debug.WriteLine(words);  
         }
 
-        public async Task GetRoute(string a, string b)
+        public async Task<string> GetRoute(string a, string b)
         {
-            await RouteRequest(a, b);
+            var travelTime = await RouteRequest(a, b); 
+
+            return travelTime;
         }
 
-        public async Task RouteRequest(string locationA, string locationB)
+        private async Task<string> RouteRequest(string locationA, string locationB)
         {
             var r = new RouteRequest()
             {
@@ -60,16 +62,14 @@ namespace BingLocationFunctionLibrary
                 BingMapsKey = _apiKey
             };
 
-            await ProcessRequest(r);
+            return await ProcessRequest(r);
 
         }
 
-        private async Task ProcessRequest(BaseRestRequest request)
+        private async Task<string> ProcessRequest(BaseRestRequest request)
         {
             try
             {
-
-
                 var start = DateTime.Now;
 
                 var response = await ServiceManager.GetResponseAsync(request);
@@ -80,13 +80,16 @@ namespace BingLocationFunctionLibrary
 
                 Debug.WriteLine($"Processing Time: {processingTime}");
 
-                Debug.WriteLine(response);  
+                Debug.WriteLine(response);
+                var x = ((BingMapsRESTToolkit.Route)response.ResourceSets[0].Resources[0]).TravelDuration;
 
+                return x.ToString(); 
 
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);  
+                Debug.WriteLine(ex.Message);
+                return "no route found"; 
             }
         }
 
